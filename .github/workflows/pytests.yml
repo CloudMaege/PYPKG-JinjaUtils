@@ -14,7 +14,7 @@ jobs:
       - uses: dschep/install-poetry-action@v1.3
       - name: Setup Environment
         run: |
-          pip -m pip install --upgrade pip
+          pip3 -m pip3 install --upgrade pip3
           poetry install
       - name: Run PyTests
         run: |
