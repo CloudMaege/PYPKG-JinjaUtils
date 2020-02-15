@@ -1,4 +1,4 @@
-name: PyTests
+name: Coverage
 on:
   push:
     branches:
@@ -19,6 +19,7 @@ jobs:
         run: |
           pip3 install --upgrade pip
           poetry install
-      - name: Run PyTests
+      - name: Run Coverage
         run: |
-          poetry run pytest tests
+          poetry run coverage run -m --omit=tests/* --source=. pytest tests/test_jinja.py
+          run coverage html --omit=tests/* -i
