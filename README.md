@@ -4,6 +4,10 @@
 
 ![CloudMage](https://github.com/TheCloudMage/Common-Images/raw/master/cloudmage/cloudmage-glow-banner.png)
 
+<br>
+
+![PyTests](https://github.com/TheCloudMage/PyPkgs-JinjaUtils/workflows/PyTests/badge.svg)
+
 <br><br>
 
 ## Table of Contents
