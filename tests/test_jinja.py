@@ -1,5 +1,6 @@
 # Run test suite with `poetry run pytest tests -v`
 # Run only this test with `poetry run pytest tests/test_jinja.py -v`
+# Run only a single test with `poetry run pytest tests/test_jinja.py::{testname} -v`
 # Coverage: poetry run coverage run -m --omit=tests/* --source=. pytest tests/test_jinja.py
 # Coverage: run coverage html --omit=tests/* -i
 ################

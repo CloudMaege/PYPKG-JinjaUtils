@@ -1,0 +1,19 @@
+name: Run Unit Tests
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Install Poetry
+        run : |
+          pip3 install poetry
+      - name: Setup Environment
+        run: |
+          poetry install
+      - name: Run PyTests
+        run: |
+          poetry run pytest tests
