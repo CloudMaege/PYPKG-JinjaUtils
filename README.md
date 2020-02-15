@@ -6,7 +6,7 @@
 
 <br>
 
-![PyTests](https://github.com/TheCloudMage/PyPkgs-JinjaUtils/workflows/PyTests/badge.svg)
+![PyTests](https://github.com/TheCloudMage/PyPkgs-JinjaUtils/workflows/PyTests/badge.svg)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Coverage](https://github.com/TheCloudMage/PyPkgs-JinjaUtils/workflows/Coverage/badge.svg)
 
 <br><br>
 
