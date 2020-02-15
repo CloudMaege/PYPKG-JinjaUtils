@@ -22,4 +22,13 @@ jobs:
       - name: Run Coverage
         run: |
           poetry run coverage run -m --omit=tests/* --source=. pytest tests/test_jinja.py
-          poetry run coverage report --omit=tests/* -i
+          poetry run coverage xml --omit=tests/* -i
+      - name: Upload coverage to Codecov  
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+          yml: ./codecov.yml 
+          fail_ci_if_error: true
