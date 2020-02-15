@@ -1,1 +1,1 @@
-from .jinjautils import JinjaUtils
+from .jinja import JinjaUtils
