@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+      - uses: actions/setup-python@v1
+      - uses: dschep/install-poetry-action@v1.3
       - name: Install Poetry
         run : |
           pip3 install poetry
