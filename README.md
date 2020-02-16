@@ -378,7 +378,7 @@ The following section will show a few examples of how the module can be used to 
 __Basic Usage__
 
 ```python
-from cloudmage-jinjautils import JinjaUtils
+from cloudmage.jinjautils import JinjaUtils
 
 # Set template directory, contains weekly_report.j2, monthly_report.j2, annual_report.j2
 jinja_template_path = os.path.join(os.getcwd(), 'templates')
@@ -414,7 +414,7 @@ Jinja.write(output_directory=jinja_output_path, output_file='feb_sales.html', ba
 <br><br>
 
 ```python
-from cloudmage-jinjautils import JinjaUtils
+from cloudmage.jinjautils import JinjaUtils
 
 # Instantiate JinjaUtils Object
 Jinja = JinjaUtils(verbose=True)
@@ -438,7 +438,7 @@ Jinja.write(output_directory='.', output_file='2019-sales.yaml')
 <br><br>
 
 ```python
-from cloudmage-jinjautils import JinjaUtils
+from cloudmage.jinjautils import JinjaUtils
 
 # Define test log class
 # This is an example log object that simply appends any DEBUG, INFO and ERROR received class messages

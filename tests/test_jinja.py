@@ -2,12 +2,12 @@
 # Run only this test with `poetry run pytest tests/test_jinja.py -v`
 # Run only a single test with `poetry run pytest tests/test_jinja.py::{testname} -v`
 # Coverage: poetry run coverage run -m --omit=tests/* --source=. pytest tests/test_jinja.py
-# Coverage: run coverage html --omit=tests/* -i
+# Coverage: poetry run coverage html --omit=tests/* -i
 ################
 # Imports:     #
 ################
-from jinjautils import JinjaUtils
-import pytest, os, sys, shutil, glob
+from cloudmage.jinjautils import JinjaUtils
+import pytest, os, sys, shutil
 
 
 ######################################
