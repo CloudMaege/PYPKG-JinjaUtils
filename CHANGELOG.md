@@ -1,3 +1,5 @@
+<!-- VSCode Markdown Exclusions-->
+<!-- markdownlint-disable MD024 Multiple Headings with the Same Content-->
 # CloudMage JinjaUtils Python Utility Package Changelog
 
 All notable changes to this project will be documented in this file.
@@ -7,9 +9,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-## [v1.0.0] - Initial Publish (2020-02-15)
+## [v1.0.3] - BugFix Patch (2020-02-18) - [@rnason](https://github.com/rnason)
 
-### Added by: [@rnason](https://github.com/rnason)
+### Added:
+
+- Check for backup value type in write method, if not bool, set to default true.
+- Test added to test for bad backup value in write method.
+- Test added to test for bad values for verbose and log in init constructor
+- Added test to validate exception behavior in render method if expected variable is not defined.
+- Additional check added to write method, to abort write attempt if no rendered template is available.
+
+<br>
+
+### Removed
+
+- None
+
+<br>
+
+### Changed
+
+- Class and Tests converted to pep8 standard with lines broken at the col 79 mark.
+
+### ToDo
+
+- ERROR:   CLS->JinjaUtils.write: -> An EXCEPTION has occurred in 'CLS->JinjaUtils.write', on line 417: -> write() argument must be str, not None
+
+<br><br>
+
+## [v1.0.0] - Initial Publish (2020-02-15) - [@rnason](https://github.com/rnason)
+
+### Added:
 
 - Internal, External Logging method
 - Verbose Getter/Setter property methods
