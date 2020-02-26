@@ -18,8 +18,8 @@ from cloudmage.jinjautils import JinjaUtils
 # Base Python Module Imports:
 import pytest
 import os
-import sys
 import shutil
+import sys
 
 
 ######################################
@@ -42,7 +42,9 @@ def setup():
     pytest_template = """
     name = {{ name }}
     verbose = {{ debug }}
-    context = {{ context }}
+    {% for k,v in context.items() %}
+    {{ k }} = {{ v }}
+    {% endfor %}
     """
 
     # Create a fresh test directory
@@ -93,7 +95,7 @@ def test_init():
     assert(Jinja._loaded_template is None)
     assert(Jinja._rendered_template is None)
     assert(Jinja._jinja_loader is None)
-    assert(Jinja._jinja_template_library is None)
+    assert(Jinja._jinja_tpl_library is None)
     assert(Jinja._output_directory is None)
     assert(Jinja._output_file is None)
 
@@ -121,16 +123,16 @@ def test_init_verbose_log(capsys):
 
     # Capture stdout, stderr to test log messages
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
-    assert "DEBUG   CLS->JinjaUtils.test_log: -> \
-        Pytest debug log write test" in out
-    assert "INFO    CLS->JinjaUtils.test_log: -> \
-        Pytest info log write test" in out
-    assert "WARNING CLS->JinjaUtils.test_log: -> \
-        Pytest warning log write test" in out
-    assert "ERROR   CLS->JinjaUtils.test_log: -> \
-        Pytest error log write test" in err
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
+    assert "DEBUG   CLS->JinjaUtils.test_log: \
+-> Pytest debug log write test" in out
+    assert "INFO    CLS->JinjaUtils.test_log: \
+-> Pytest info log write test" in out
+    assert "WARNING CLS->JinjaUtils.test_log: \
+-> Pytest warning log write test" in out
+    assert "ERROR   CLS->JinjaUtils.test_log: \
+-> Pytest error log write test" in err
 
 
 def test_init_verbose_false(capsys):
@@ -156,16 +158,16 @@ def test_init_verbose_false(capsys):
 
     # Capture stdout, stderr to test log messages
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
-    assert "DEBUG   CLS->JinjaUtils.test_log: -> \
-        Pytest debug log write test" not in out
-    assert "INFO    CLS->JinjaUtils.test_log: -> \
-        Pytest info log write test" not in out
-    assert "WARNING CLS->JinjaUtils.test_log: -> \
-        Pytest warning log write test" not in out
-    assert "ERROR   CLS->JinjaUtils.test_log: -> \
-        Pytest error log write test" in err
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
+    assert "DEBUG   CLS->JinjaUtils.test_log: \
+-> Pytest debug log write test" not in out
+    assert "INFO    CLS->JinjaUtils.test_log: \
+-> Pytest info log write test" not in out
+    assert "WARNING CLS->JinjaUtils.test_log: \
+-> Pytest warning log write test" not in out
+    assert "ERROR   CLS->JinjaUtils.test_log: \
+-> Pytest error log write test" in err
 
 
 def test_init_verbose_invalid(capsys):
@@ -192,16 +194,16 @@ def test_init_verbose_invalid(capsys):
 
     # Capture stdout, stderr to test log messages
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
-    assert "DEBUG   CLS->JinjaUtils.test_log: -> \
-        Pytest debug log write test" not in out
-    assert "INFO    CLS->JinjaUtils.test_log: -> \
-        Pytest info log write test" not in out
-    assert "WARNING CLS->JinjaUtils.test_log: -> \
-        Pytest warning log write test" not in out
-    assert "ERROR   CLS->JinjaUtils.test_log: -> \
-        Pytest error log write test" in err
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
+    assert "DEBUG   CLS->JinjaUtils.test_log: \
+-> Pytest debug log write test" not in out
+    assert "INFO    CLS->JinjaUtils.test_log: \
+-> Pytest info log write test" not in out
+    assert "WARNING CLS->JinjaUtils.test_log: \
+-> Pytest warning log write test" not in out
+    assert "ERROR   CLS->JinjaUtils.test_log: \
+-> Pytest error log write test" in err
 
 
 def test_init_log_object(capsys):
@@ -286,19 +288,19 @@ def test_init_log_object(capsys):
     # Test the log messages to make sure they match the written logs
     assert(
         LogObj.debug_logs[-1] == "CLS->JinjaUtils.test_log_object: \
-            -> Pytest log debug test"
+-> Pytest log debug test"
     )
     assert(
         LogObj.info_logs[-1] == "CLS->JinjaUtils.test_log_object: \
-            -> Pytest log info test"
+-> Pytest log info test"
     )
     assert(
         LogObj.warning_logs[-1] == "CLS->JinjaUtils.test_log_object: \
-            -> Pytest log warning test"
+-> Pytest log warning test"
     )
     assert(
         LogObj.error_logs[-1] == "CLS->JinjaUtils.test_log_object: \
-            -> Pytest log error test"
+-> Pytest log error test"
     )
 
 
@@ -324,16 +326,16 @@ def test_init_log_invalid_object(capsys):
 
     # Capture stdout, stderr to test log messages
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
-    assert "DEBUG   CLS->JinjaUtils.test_log: -> \
-        Pytest debug log write test" not in out
-    assert "INFO    CLS->JinjaUtils.test_log: -> \
-        Pytest info log write test" not in out
-    assert "WARNING CLS->JinjaUtils.test_log: -> \
-        Pytest warning log write test" not in out
-    assert "ERROR   CLS->JinjaUtils.test_log: -> \
-        Pytest error log write test" in err
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
+    assert "DEBUG   CLS->JinjaUtils.test_log: \
+-> Pytest debug log write test" in out
+    assert "INFO    CLS->JinjaUtils.test_log: \
+-> Pytest info log write test" in out
+    assert "WARNING CLS->JinjaUtils.test_log: \
+-> Pytest warning log write test" in out
+    assert "ERROR   CLS->JinjaUtils.test_log: \
+-> Pytest error log write test" in err
 
 
 def test_trim_blocks_property(capsys):
@@ -362,14 +364,14 @@ def test_trim_blocks_property(capsys):
 
     # Capture stdout, stderr to test log messages
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
     assert "INFO    CLS->JinjaUtils.trim_blocks: \
-        -> trim_blocks property update requested." in out
+-> trim_blocks property update requested." in out
     assert "INFO    CLS->JinjaUtils.trim_blocks: \
-        -> trim_blocks property requested." in out
+-> trim_blocks property requested." in out
     assert "ERROR   CLS->JinjaUtils.trim_blocks: \
-        -> Property trim_blocks argument expected bool but received" in err
+-> trim_blocks argument expected bool but received type:" in err
 
 
 def test_lstrip_blocks_property(capsys):
@@ -398,14 +400,14 @@ def test_lstrip_blocks_property(capsys):
 
     # Capture stdout, stderr to test log messages
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
     assert "INFO    CLS->JinjaUtils.lstrip_blocks: \
-        -> lstrip_blocks property update requested." in out
+-> lstrip_blocks property update requested." in out
     assert "INFO    CLS->JinjaUtils.lstrip_blocks: \
-        -> lstrip_blocks property requested." in out
+-> lstrip_blocks property requested." in out
     assert "ERROR   CLS->JinjaUtils.lstrip_blocks: \
-        -> Property lstrip_blocks argument expected bool but received" in err
+-> lstrip_blocks argument expected bool but received type:" in err
 
 
 def test_verbose_property(capsys):
@@ -434,14 +436,14 @@ def test_verbose_property(capsys):
 
     # Capture stdout, stderr to test log messages
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
     assert "INFO    CLS->JinjaUtils.verbose: \
-        -> verbose property update requested." in out
+-> verbose property update requested." in out
     assert "INFO    CLS->JinjaUtils.verbose: \
-        -> verbose property requested." in out
+-> verbose property requested." in out
     assert "ERROR   CLS->JinjaUtils.verbose: \
-        -> Property verbose argument expected bool but received" in err
+-> verbose argument expected bool but received" in err
 
     Jinja2 = JinjaUtils(verbose=42)
     assert(not Jinja2._verbose)
@@ -465,10 +467,10 @@ def test_exception_handler(capsys):
     # Capture stdout, stderr to check the log messages
     # for the expected exception.
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
     assert "ERROR   CLS->JinjaUtils.log: \
-        -> An EXCEPTION has occurred in 'CLS->JinjaUtils.log'" in err
+-> EXCEPTION occurred in: 'CLS->JinjaUtils.log'" in err
 
 
 def test_template_directory_property(capsys):
@@ -499,7 +501,7 @@ def test_template_directory_property(capsys):
     assert(len(Jinja.available_templates) == 1)
     assert(len(Jinja._available_templates) == 1)
     assert(Jinja._jinja_loader is not None)
-    assert(Jinja._jinja_template_library is not None)
+    assert(Jinja._jinja_tpl_library is not None)
 
     # Capture stdout, stderr to check the log messages
     # for the expected exception.
@@ -507,17 +509,17 @@ def test_template_directory_property(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "INFO    CLS->JinjaUtils.template_directory: \
-        -> template_directory property update requested." in out
+-> template_directory property update requested." in out
     assert "DEBUG   CLS->JinjaUtils.template_directory: \
-        -> Template directory path set to: {}".format(
-            test_template_directory
-        ) in out
+-> Template directory path set to: {}".format(
+        test_template_directory
+    ) in out
     assert "DEBUG   CLS->JinjaUtils.template_directory: \
-        -> Updated template_directory property with: ['test_tpl.j2']" in out
+-> Updated template_directory property with: ['test_tpl.j2']" in out
     assert "DEBUG   CLS->JinjaUtils.template_directory: \
-        -> Jinja loaded the provided template_directory successfully!" in out
+-> Jinja successfully loaded:" in out
     assert "DEBUG   CLS->JinjaUtils.template_directory: \
-        -> Added to_json filter to Jinja Environment object." in out
+-> Added to_json filter to Jinja Environment object." in out
 
 
 def test_template_directory_property_invalid(capsys):
@@ -546,24 +548,24 @@ def test_template_directory_property_invalid(capsys):
     # Test if a bad value is passed for the template directory
     JinjaTestFail.template_directory = 42
 
-    assert(JinjaTestFail.template_directory == "No setting found!. \
-        Set this property with object.template_directory = '/path/to/")
+    assert(JinjaTestFail.template_directory == "A template directory \
+has not yet been configured.")
     assert(JinjaTestFail._template_directory is None)
     assert(isinstance(JinjaTestFail.available_templates, list))
     assert(isinstance(JinjaTestFail._available_templates, list))
     assert(not JinjaTestFail.available_templates)
     assert(not JinjaTestFail._available_templates)
     assert(JinjaTestFail._jinja_loader is None)
-    assert(JinjaTestFail._jinja_template_library is None)
+    assert(JinjaTestFail._jinja_tpl_library is None)
 
     # Re-write to stderr to capture the error logs
     out, err = capsys.readouterr()
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "ERROR   CLS->JinjaUtils.template_directory: \
-        -> Provided directory path expected type str but received:" in err
+-> Provided path expected type str but received:" in err
     assert "ERROR   CLS->JinjaUtils.template_directory: \
-        -> Aborting property update..." in err
+-> Aborting property update..." in err
 
     ###############################################
     # Invalid template directory non path string  #
@@ -571,24 +573,24 @@ def test_template_directory_property_invalid(capsys):
     # Test if a bad string is passed
     JinjaTestFail.template_directory = "I Love Pancakes!"
 
-    assert(JinjaTestFail.template_directory == "No setting found!. \
-        Set this property with object.template_directory = '/path/to/")
+    assert(JinjaTestFail.template_directory == "A template directory \
+has not yet been configured.")
     assert(JinjaTestFail._template_directory is None)
     assert(isinstance(JinjaTestFail.available_templates, list))
     assert(isinstance(JinjaTestFail._available_templates, list))
     assert(not JinjaTestFail.available_templates)
     assert(not JinjaTestFail._available_templates)
     assert(JinjaTestFail._jinja_loader is None)
-    assert(JinjaTestFail._jinja_template_library is None)
+    assert(JinjaTestFail._jinja_tpl_library is None)
 
     # Re-write to stderr to capture the error logs
     out, err = capsys.readouterr()
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "ERROR   CLS->JinjaUtils.template_directory: \
-        -> Provided directory path doesn't exit." in err
+-> Provided directory path doesn't exit." in err
     assert "ERROR   CLS->JinjaUtils.template_directory: \
-        -> Aborting property update..." in err
+-> Aborting property update..." in err
 
     ###############################################
     # Empty Directory Test  #
@@ -610,16 +612,16 @@ def test_template_directory_property_invalid(capsys):
     assert(not JinjaTestFail.available_templates)
     assert(not JinjaTestFail._available_templates)
     assert(JinjaTestFail._jinja_loader is not None)
-    assert(JinjaTestFail._jinja_template_library is not None)
+    assert(JinjaTestFail._jinja_tpl_library is not None)
 
     # Re-write to stderr to capture the error logs
     out, err = capsys.readouterr()
     # sys.stdout.write(out)
     # sys.stderr.write(err)
-    assert "Jinja loaded the provided template_directory successfully!" in out
-    assert "Template directory path set to: {}".format(
-        test_empty_template_directory
+    assert "Jinja successfully loaded: {}".format(
+        JinjaTestFail.template_directory
     ) in out
+    assert "Added to_json filter to Jinja Environment object" in out
 
     ####################################################
     # Set available templates to None and call getter  #
@@ -661,10 +663,10 @@ def test_load(capsys):
     # Capture stdout, stderr to check the log messages
     # for the expected exception.
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
     assert "WARNING CLS->JinjaUtils.load: \
-        -> Requested template not found in template directory:" in out
+-> Requested template not found in:" in out
 
     ####################################################
     # Load Template from Loaded template directory:    #
@@ -680,7 +682,7 @@ def test_load(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "INFO    CLS->JinjaUtils.load: \
-        -> Loaded template file from template_directory" in out
+-> Loaded template file from:" in out
 
     ####################################################
     # Load Template from File:                         #
@@ -708,11 +710,11 @@ def test_load(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "INFO    CLS->JinjaUtils.load: \
-        -> Loaded template file from path:" in out
+-> Loaded template file from path:" in out
     assert "DEBUG   CLS->JinjaUtils.load: \
-        -> Loaded template name set to: {}".format(
-            os.path.basename(jinja_test_template_filename)
-        ) in out
+-> Loaded template name set to: {}".format(
+        os.path.basename(jinja_test_template_filename)
+    ) in out
 
     #####################################################
     # Load Template With Number to try and bork things: #
@@ -722,17 +724,17 @@ def test_load(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "ERROR   CLS->JinjaUtils.load: \
-        -> load expected template of type str but received type:" in err
+-> load expected str template but received" in err
 
     #####################################################
     # Load Template With Object to try and bork things: #
     #####################################################
     Jinja.load = Jinja
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
     assert "ERROR   CLS->JinjaUtils.load: \
-        -> An EXCEPTION has occurred in 'CLS->JinjaUtils.load', on line" in err
+-> EXCEPTION occurred in: 'CLS->JinjaUtils.load', on line" in err
 
 
 def test_render(capsys):
@@ -771,7 +773,7 @@ def test_render(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "INFO    CLS->JinjaUtils.load: \
-        -> Loaded template file from template_directory" in out
+-> Loaded template file from:" in out
 
     # Before attempting to render the template make sure that
     # no existing rendered template response comes back
@@ -791,9 +793,9 @@ def test_render(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "INFO    CLS->JinjaUtils.render: \
-        -> render of loaded template requested." in out
+-> render of loaded template requested." in out
     assert "INFO    CLS->JinjaUtils.render: \
-        -> <Template 'test_tpl.j2'> rendered successfully!" in out
+-> <Template 'test_tpl.j2'> rendered successfully!" in out
 
     ####################################################
     # Load and Render Template from variable:          #
@@ -827,11 +829,11 @@ def test_render(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "INFO    CLS->JinjaUtils.load: \
-        -> Loaded template file from path:" in out
+-> Loaded template file from path:" in out
     assert "DEBUG   CLS->JinjaUtils.load: \
-        -> Loaded template name set to: {}".format(
-            os.path.basename(jinja_test_template_filename)
-        ) in out
+-> Loaded template name set to: {}".format(
+        os.path.basename(jinja_test_template_filename)
+    ) in out
 
 
 def test_render_exception(capsys):
@@ -871,25 +873,19 @@ def test_render_exception(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "INFO    CLS->JinjaUtils.load: \
-        -> Loaded template file from template_directory" in out
-
-    # Before attempting to render the template make sure that
-    # no existing rendered template response comes back
-    assert(Jinja.rendered == "No template has been rendered!")
-    assert(Jinja._rendered_template is None)
+-> Loaded template file from:" in out
 
     # Render the Template file without passing the referenced context variable
-    Jinja.render(name="PyTest", debug=True)
-    assert(Jinja._rendered_template is None)
-    assert(Jinja.rendered == "No template has been rendered!")
+    Jinja.render(debug=True)
 
     # Capture stdout, stderr to check the log messages
     # for the expected exception.
     out, err = capsys.readouterr()
     # sys.stdout.write(out)
     # sys.stderr.write(err)
-    assert "ERROR:   CLS->JinjaUtils.render: \
-        -> An EXCEPTION has occurred in 'CLS->JinjaUtils.render'" in err
+    assert "ERROR   CLS->JinjaUtils.render: \
+-> EXCEPTION occurred in: 'CLS->JinjaUtils.render', on line 617: \
+-> 'context' is undefined" in err
 
     ############################################################
     # Try to set the loaded Template to None to hit Exception: #
@@ -903,7 +899,7 @@ def test_render_exception(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "ERROR   CLS->JinjaUtils.render: \
-        -> No template loaded, Aborting render!" in err
+-> No template loaded, Aborting render!" in err
 
     ##############################################################
     # Try to set the loaded Template to an int to hit Exception: #
@@ -917,7 +913,7 @@ def test_render_exception(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "ERROR   CLS->JinjaUtils.render: \
-        -> No template loaded, Aborting render!" in err
+-> No template loaded, Aborting render!" in err
 
     ##############################################################
     # Try to set the loaded Template to a Jinja Object:          #
@@ -931,7 +927,7 @@ def test_render_exception(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "ERROR   CLS->JinjaUtils.render: \
-        -> No template loaded, Aborting render!" in err
+-> No template loaded, Aborting render!" in err
 
 
 def test_write(capsys):
@@ -954,8 +950,34 @@ def test_write(capsys):
         'pytest_template_directory'
     )
 
-    # Write a log with a bad value to trigger an exception.
+    # Set up the Class object template directory.
     Jinja.template_directory = test_template_directory
+
+    ####################################################
+    # Before template load, test no template rendered: #
+    ####################################################
+    # Jinja._rendered_template = None
+    assert(Jinja.rendered == "No template has been rendered!")
+    Jinja.render()
+    write_template = Jinja.write(
+        output_directory=test_template_directory,
+        output_file='test.txt'
+    )
+    assert(not write_template)
+    
+    # Reset the output directory and file
+    Jinja._output_directory = None
+    Jinja._output_file = None
+
+    # Capture stdout, stderr to check the log messages
+    # for the expected exception.
+    out, err = capsys.readouterr()
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
+    assert "WARNING CLS->JinjaUtils.rendered: \
+-> Render method not called or failed to render." in out
+    assert "WARNING CLS->JinjaUtils.rendered: \
+-> No rendered template available for write request!" in out
 
     ####################################################
     # Load the template from the Jinja Environment:    #
@@ -971,7 +993,7 @@ def test_write(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "INFO    CLS->JinjaUtils.load: \
-        -> Loaded template file from template_directory" in out
+-> Loaded template file from:" in out
 
     ####################################################
     # Render the loaded template:                      #
@@ -985,12 +1007,12 @@ def test_write(capsys):
     # Capture stdout, stderr to check the log messages
     # for the expected exception.
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
     assert "INFO    CLS->JinjaUtils.render: \
-        -> render of loaded template requested." in out
+-> render of loaded template requested." in out
     assert "INFO    CLS->JinjaUtils.render: \
-        -> <Template 'test_tpl.j2'> rendered successfully!" in out
+-> <Template 'test_tpl.j2'> rendered successfully!" in out
 
     ####################################################
     # Write the template to disk:                      #
@@ -1010,8 +1032,8 @@ def test_write(capsys):
     out, err = capsys.readouterr()
     # sys.stdout.write(out)
     # sys.stderr.write(err)
-    assert "ERROR   CLS->JinjaUtils.write: -> Invalid output directory \
-        specified in {} request... Aborting request!".format('write') in err
+    assert "ERROR   CLS->JinjaUtils.write: \
+-> Invalid output directory specified in write call" in err
 
     # ==================================
     # Invalid directory path specified
@@ -1029,8 +1051,8 @@ def test_write(capsys):
     out, err = capsys.readouterr()
     # sys.stdout.write(out)
     # sys.stderr.write(err)
-    assert "ERROR   CLS->JinjaUtils.write: -> Invalid output directory \
-        specified in {} request... Aborting request!".format('write') in err
+    assert "ERROR   CLS->JinjaUtils.write: \
+-> Invalid output directory specified in write call" in err
 
     # ==================================
     # Output directory set to file
@@ -1048,8 +1070,8 @@ def test_write(capsys):
     out, err = capsys.readouterr()
     # sys.stdout.write(out)
     # sys.stderr.write(err)
-    assert "ERROR   CLS->JinjaUtils.write: -> Invalid output directory \
-        specified in {} request... Aborting request!".format('write') in err
+    assert "ERROR   CLS->JinjaUtils.write: \
+-> Invalid output directory specified in write call" in err
 
     # ==================================
     # Invalid output file name
@@ -1067,8 +1089,8 @@ def test_write(capsys):
     out, err = capsys.readouterr()
     # sys.stdout.write(out)
     # sys.stderr.write(err)
-    assert "ERROR   CLS->JinjaUtils.write: -> \
-        Output file name expected str value but received type" in err
+    assert "ERROR   CLS->JinjaUtils.write: \
+-> Output expected str filename but received" in err
 
     # ==================================
     # Output file set to file path
@@ -1092,19 +1114,19 @@ def test_write(capsys):
     # Capture stdout, stderr to check the log messages
     # for the expected exception.
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
-    assert "DEBUG   CLS->JinjaUtils.write: -> \
-        Output file has been set to: {}!".format(Jinja._output_file) in out
-    assert "DEBUG   CLS->JinjaUtils.write: -> \
-        Writing rendered template to output file: {}".format(
-            os.path.join(
-                Jinja._output_directory,
-                Jinja._output_file
-            )
-        ) in out
-    assert "INFO    CLS->JinjaUtils.write: -> \
-        {} written successfully!".format(
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
+    assert "DEBUG   CLS->JinjaUtils.write: \
+-> Output file has been set to: {}!".format(Jinja._output_file) in out
+    assert "DEBUG   CLS->JinjaUtils.write: \
+-> Writing rendered template to output file: {}".format(
+        os.path.join(
+            Jinja._output_directory,
+            Jinja._output_file
+        )
+    ) in out
+    assert "INFO    CLS->JinjaUtils.rendered: \
+-> {} written successfully!".format(
             os.path.join(
                 Jinja._output_directory,
                 Jinja._output_file
@@ -1143,31 +1165,31 @@ def test_write(capsys):
     # Capture stdout, stderr to check the log messages
     # for the expected exception.
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
-    assert "DEBUG   CLS->JinjaUtils.write: -> \
-        Output file has been set to: {}!".format(Jinja._output_file) in out
-    assert "DEBUG   CLS->JinjaUtils.write: -> \
-        Writing rendered template to output file: {}".format(
-            os.path.join(
-                Jinja._output_directory,
-                Jinja._output_file
-            )
-        ) in out
-    assert "INFO    CLS->JinjaUtils.write: -> \
-        file.test backed up to: {}".format(
-            os.path.join(
-                Jinja._output_directory,
-                backup_file
-            )
-        ) in out
-    assert "INFO    CLS->JinjaUtils.write: -> \
-        {} written successfully!".format(
-            os.path.join(
-                Jinja._output_directory,
-                Jinja._output_file
-            )
-        ) in out
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
+    assert "DEBUG   CLS->JinjaUtils.write: \
+-> Output file has been set to: {}!".format(Jinja._output_file) in out
+    assert "DEBUG   CLS->JinjaUtils.write: \
+-> Writing rendered template to output file: {}".format(
+        os.path.join(
+            Jinja._output_directory,
+            Jinja._output_file
+        )
+    ) in out
+    assert "INFO    CLS->JinjaUtils.write: \
+-> file.test backed up to: {}".format(
+        os.path.join(
+            Jinja._output_directory,
+            backup_file
+        )
+    ) in out
+    assert "INFO    CLS->JinjaUtils.rendered: \
+-> {} written successfully!".format(
+        os.path.join(
+            Jinja._output_directory,
+            Jinja._output_file
+        )
+    ) in out
 
     # ==================================
     # test no backup
@@ -1212,28 +1234,28 @@ def test_write(capsys):
     # Capture stdout, stderr to check the log messages
     # for the expected exception.
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
-    assert "DEBUG   CLS->JinjaUtils.write: -> \
-        Output file has been set to: {}!".format(Jinja._output_file) in out
-    assert "DEBUG   CLS->JinjaUtils.write: -> \
-        Writing rendered template to output file: {}".format(
-            os.path.join(
-                Jinja._output_directory,
-                Jinja._output_file
-            )
-        ) in out
-    assert "WARNING CLS->JinjaUtils.write: -> \
-        Existing file backup disabled, {} will be overwritten!".format(
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
+    assert "DEBUG   CLS->JinjaUtils.write: \
+-> Output file has been set to: {}!".format(Jinja._output_file) in out
+    assert "DEBUG   CLS->JinjaUtils.write: \
+-> Writing rendered template to output file: {}".format(
+        os.path.join(
+            Jinja._output_directory,
             Jinja._output_file
-        ) in out
-    assert "INFO    CLS->JinjaUtils.write: -> \
-        {} written successfully!".format(
-            os.path.join(
-                Jinja._output_directory,
-                Jinja._output_file
-            )
-        ) in out
+        )
+    ) in out
+    assert "WARNING CLS->JinjaUtils.write: \
+-> File backup is disabled, overwritting: {}!".format(
+        Jinja._output_file
+    ) in out
+    assert "INFO    CLS->JinjaUtils.rendered: \
+-> {} written successfully!".format(
+        os.path.join(
+            Jinja._output_directory,
+            Jinja._output_file
+        )
+    ) in out
 
     # ==================================
     # test backup invalid value
@@ -1247,8 +1269,8 @@ def test_write(capsys):
     # Capture stdout, stderr to check the log messages
     # for the expected exception.
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
-    assert "WARNING CLS->JinjaUtils.write: -> \
-        Backup expected a bool value but received type:" in out
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
+    assert "WARNING CLS->JinjaUtils.write: \
+-> Backup expected a bool value but received type:" in out
     assert(write_template)

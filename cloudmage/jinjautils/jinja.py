@@ -72,7 +72,7 @@ class JinjaUtils(object):
         # Jinja Objects using Jinja FileSystemLoader,
         # and Jinja Environment objects.
         self._jinja_loader = None
-        self._jinja_template_library = None
+        self._jinja_tpl_library = None
         self._output_directory = None
         self._output_file = None
 
@@ -93,14 +93,13 @@ class JinjaUtils(object):
             Publish properly formatted exceptions
             to log object or stdout, stderr
         """
-        parse_exc_msg = "An EXCEPTION has occurred in '{}.{}', \
-            on line {}: -> {}".format(
-                self._log_context,
-                caller_function,
-                sys.exc_info()[2].tb_lineno,
-                str(exception_object)
-            )
-        self.log(parse_exc_msg, 'error', caller_function)
+        exc_msg = "EXCEPTION occurred in: '{}.{}', on line {}: -> {}".format(
+            self._log_context,
+            caller_function,
+            sys.exc_info()[2].tb_lineno,
+            str(exception_object)
+        )
+        self.log(exc_msg, 'error', caller_function)
 
     ############################################
     # Class Logger:                            #
@@ -150,7 +149,7 @@ class JinjaUtils(object):
             # If no valid log object was passed into the class constructor,
             # write the message to stdout, stderr:
             else:
-                log_message = "{}     {}{}{}: -> {}".format(
+                log_message = "{}    {}{}{}: -> {}".format(
                     datetime.datetime.now(),
                     log_type.upper(),
                     " " * log_msg_offset,
@@ -212,11 +211,10 @@ class JinjaUtils(object):
             )
         else:
             self.log(
-                "Property {} argument expected bool but received type: {}. \
-                    Aborting update!".format(
-                        self.__id,
-                        type(trim_blocks_setting)
-                    ),
+                "{} argument expected bool but received type: {}".format(
+                    self.__id,
+                    type(trim_blocks_setting)
+                ),
                 'error',
                 self.__id
             )
@@ -266,11 +264,10 @@ class JinjaUtils(object):
             )
         else:
             self.log(
-                "Property {} argument expected bool but received type: {}. \
-                    Aborting update!".format(
-                        self.__id,
-                        type(lstrip_blocks_setting)
-                    ),
+                "{} argument expected bool but received type: {}".format(
+                    self.__id,
+                    type(lstrip_blocks_setting)
+                ),
                 'error',
                 self.__id
             )
@@ -319,11 +316,10 @@ class JinjaUtils(object):
             )
         else:
             self.log(
-                "Property {} argument expected bool but received type: {}. \
-                    Aborting update!".format(
-                        self.__id,
-                        type(verbose)
-                    ),
+                "{} argument expected bool but received type: {}".format(
+                    self.__id,
+                    type(verbose)
+                ),
                 'error',
                 self.__id
             )
@@ -346,8 +342,7 @@ class JinjaUtils(object):
             self.__id
         )
         if self._template_directory is None:
-            return "No setting found!. Set this property with \
-                object.template_directory = '/path/to/template/directory'"
+            return "A template directory has not yet been configured."
         else:
             return self._template_directory
 
@@ -411,16 +406,16 @@ class JinjaUtils(object):
                     self._jinja_loader = FileSystemLoader(
                         self._template_directory
                     )
-                    self._jinja_template_library = Environment(
+                    self._jinja_tpl_library = Environment(
                         loader=self._jinja_loader,
                         trim_blocks=self._trim_blocks,
                         lstrip_blocks=self._lstrip_blocks
                     )
-                    self._jinja_template_library.filters['to_json'] = \
-                        json.dumps
+                    self._jinja_tpl_library.filters['to_json'] = json.dumps
                     self.log(
-                        "Jinja loaded the provided template_directory \
-                            successfully!",
+                        "Jinja successfully loaded: {}".format(
+                            self._template_directory
+                        ),
                         'debug',
                         self.__id
                     )
@@ -430,8 +425,7 @@ class JinjaUtils(object):
                         self.__id
                     )
                     # Set Jinja template library
-                    template_list = \
-                        self._jinja_template_library.list_templates()
+                    template_list = self._jinja_tpl_library.list_templates()
 
                     # Set available_templates property
                     if isinstance(template_list, list) and template_list:
@@ -457,8 +451,9 @@ class JinjaUtils(object):
                     )
             else:
                 self.log(
-                    "Provided directory path expected type str but received: \
-                        {}".format(type(template_directory_path)),
+                    "Provided path expected type str but received: {}".format(
+                        type(template_directory_path)
+                    ),
                     'error',
                     self.__id
                 )
@@ -536,16 +531,17 @@ class JinjaUtils(object):
                 )
             else:
                 if isinstance(template, str):
-                    for tpl in self._jinja_template_library.list_templates():
+                    for tpl in self._jinja_tpl_library.list_templates():
                         if template == tpl:
                             self._loaded_template = \
-                                self._jinja_template_library.get_template(
+                                self._jinja_tpl_library.get_template(
                                     template
                                 )
                             self._loaded_template_filename = template
                             self.log(
-                                "Loaded template file from template_directory\
-                                    : {}".format(self._loaded_template),
+                                "Loaded template file from: {}".format(
+                                    self._loaded_template
+                                ),
                                 'info',
                                 self.__id
                             )
@@ -554,17 +550,18 @@ class JinjaUtils(object):
                         self._loaded_template_filename is None
                     ):
                         self.log(
-                            "Requested template not found in template \
-                                directory: {}".format(
-                                    self._template_directory
+                            "Requested template not found in: {}".format(
+                                self._template_directory
                             ),
                             'warning',
                             self.__id
                         )
                 else:
                     self.log(
-                        "{} expected template of type str but received \
-                            type: {}".format(self.__id, type(template)),
+                        "{} expected str template but received: {}".format(
+                            self.__id,
+                            type(template)
+                        ),
                         'error',
                         self.__id
                     )
@@ -697,9 +694,8 @@ class JinjaUtils(object):
                         )
                 else:
                     self.log(
-                        "Output file name expected str value but received \
-                            type: {}... Aborting request!".format(
-                                type(output_file)
+                        "Output expected str filename but received {}".format(
+                            type(output_file)
                         ),
                         'error',
                         self.__id
@@ -707,8 +703,9 @@ class JinjaUtils(object):
                     return False
             else:
                 self.log(
-                    "Invalid output directory specified in {} request... \
-                        Aborting request!".format(self.__id),
+                    "Invalid output directory specified in {} call".format(
+                        self.__id
+                    ),
                     'error',
                     self.__id
                 )
@@ -749,8 +746,9 @@ class JinjaUtils(object):
                     )
                 else:
                     self.log(
-                        "Existing file backup disabled, {} will be \
-                            overwritten!".format(self._output_file),
+                        "File backup is disabled, overwritting: {}!".format(
+                            self._output_file
+                        ),
                         "warning",
                         self.__id
                     )
@@ -767,8 +765,13 @@ class JinjaUtils(object):
                 self.__id
             )
             if self.rendered == "No template has been rendered!":
-                self.log("Render method not called or failed to render. \
-                    No rendered template available for write request!",
+                self.log(
+                    "Render method not called or failed to render.",
+                    'warning',
+                    self.__id
+                )
+                self.log(
+                    "No rendered template available for write request!",
                     'warning',
                     self.__id
                 )
