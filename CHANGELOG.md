@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-## [v1.0.3] - BugFix Patch (2020-02-18) - [@rnason](https://github.com/rnason)
+## [v1.0.4] - BugFix Patch (2020-02-18) - [@rnason](https://github.com/rnason)
 
 ### Added:
 
@@ -23,17 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- None
+- Internal _loaded_template_filename attribute, replaced with _loaded_template.name
 
 <br>
 
 ### Changed
 
 - Class and Tests converted to pep8 standard with lines broken at the col 79 mark.
-
-### ToDo
-
-- ERROR:   CLS->JinjaUtils.write: -> An EXCEPTION has occurred in 'CLS->JinjaUtils.write', on line 417: -> write() argument must be str, not None
+- Tests better divided out to test for single scenario instead of multiple scenarios
 
 <br><br>
 

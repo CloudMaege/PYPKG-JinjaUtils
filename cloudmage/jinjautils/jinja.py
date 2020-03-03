@@ -66,7 +66,6 @@ class JinjaUtils(object):
         self._template_directory = None
         self._available_templates = []
         self._loaded_template = None
-        self._loaded_template_filename = None
         self._rendered_template = None
 
         # Jinja Objects using Jinja FileSystemLoader,
@@ -480,10 +479,11 @@ class JinjaUtils(object):
         )
         # Return the loaded template name.
         if (
-            self._loaded_template_filename is not None and
-            isinstance(self._loaded_template_filename, str)
+            self._loaded_template is not None and
+            self._loaded_template.name is not None and
+            isinstance(self._loaded_template.name, str)
         ):
-            return str(self._loaded_template_filename)
+            return str(self._loaded_template.name)
         else:
             return "No template has been loaded!"
 
@@ -498,9 +498,7 @@ class JinjaUtils(object):
         * A file path to a valid jinja file on the filesystem
         """
         # Reinitialize the loaded template
-        self._available_templates = []
         self._loaded_template = None
-        self._loaded_template_filename = None
         try:
             # Define this methods identity for functional logging:
             self.__id = inspect.stack()[0][3]
@@ -514,7 +512,6 @@ class JinjaUtils(object):
             # of template was passed.
             if os.path.isfile(template) and os.access(template, os.R_OK):
                 self._loaded_template = Template(open(template).read())
-                self._loaded_template_filename = os.path.basename(template)
                 self.log(
                     "Loaded template file from path: {}".format(
                         self._loaded_template
@@ -522,9 +519,11 @@ class JinjaUtils(object):
                     'info',
                     self.__id
                 )
+                if not self._loaded_template.name:
+                    self._loaded_template.name = os.path.basename(template)
                 self.log(
                     "Loaded template name set to: {}".format(
-                        self._loaded_template_filename
+                        self._loaded_template.name
                     ),
                     'debug',
                     self.__id
@@ -537,7 +536,6 @@ class JinjaUtils(object):
                                 self._jinja_tpl_library.get_template(
                                     template
                                 )
-                            self._loaded_template_filename = template
                             self.log(
                                 "Loaded template file from: {}".format(
                                     self._loaded_template
@@ -546,8 +544,7 @@ class JinjaUtils(object):
                                 self.__id
                             )
                     if (
-                        self._loaded_template is None and
-                        self._loaded_template_filename is None
+                        self._loaded_template is None
                     ):
                         self.log(
                             "Requested template not found in: {}".format(
@@ -650,19 +647,25 @@ class JinjaUtils(object):
             # Set local method variables
             if isinstance(backup, bool):
                 self.__backup = backup
+            else:
                 self.log(
+                    "Backup expected bool value but received type: {}".format(
+                        type(backup)
+                    ),
+                    'warning',
+                    self.__id
+                )
+                self.log(
+                    "Setting backup to default setting...",
+                    'warning',
+                    self.__id
+                )
+                self.__backup = True
+            self.log(
                     "Backup setting has been set to: {}.".format(
                         self.__backup
                     ),
                     'info',
-                    self.__id
-                )
-            else:
-                self.log(
-                    "Backup expected a bool value but received type: ".format(
-                        type(backup)
-                    ),
-                    'warning',
                     self.__id
                 )
 
