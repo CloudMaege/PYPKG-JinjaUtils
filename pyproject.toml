@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "CloudMage-JinjaUtils"
-version = "1.0.2"
+version = "1.0.4"
 description = "Quickly and easily define, load, render and write Jinja templates."
 authors = ["Rich Nason <rnason@cloudmage.io>"]
 maintainers = ["Rich Nason <rnason@cloudmage.io>"]
