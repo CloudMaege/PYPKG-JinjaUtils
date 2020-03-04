@@ -19,7 +19,7 @@ from cloudmage.jinjautils import JinjaUtils
 import pytest
 import os
 import shutil
-import sys
+# import sys
 
 
 ######################################
@@ -2037,22 +2037,12 @@ def test_write_backup_invalid(capsys):
     # Capture stdout, stderr to check the log messages
     # for the expected outputs.
     out, err = capsys.readouterr()
-    sys.stdout.write(out)
-    sys.stderr.write(err)
+    # sys.stdout.write(out)
+    # sys.stderr.write(err)
     assert "WARNING CLS->JinjaUtils.write: \
 -> Backup expected bool value but received type:" in out
     assert "INFO    CLS->JinjaUtils.write: \
--> test_tpl.html backed up to: {}".format(
-        os.path.join(
-            Jinja._output_directory,
-            backup_file
-        )
-    ) in out
-    assert "INFO    CLS->JinjaUtils.rendered: \
--> {} written successfully!".format(
-        os.path.join(
-            Jinja._output_directory,
-            Jinja._output_file
-        )
-    ) in out
+-> test_tpl.html backed up to:" in out
+    assert "written successfully!" in out
+    assert(backup_file)
     assert(write_template)
