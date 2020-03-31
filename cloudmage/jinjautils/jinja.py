@@ -38,7 +38,43 @@ class JinjaUtils(object):
     """
 
     def __init__(self, verbose=False, log=None):
-        '''JinjaHelper Class Constructor'''
+        """ JinjaHelper Class Constructor
+
+        Parameters:
+            verbose (bool): optional [default=False]
+            log     (obj):  optional [default=None]
+
+        Attributes:
+            _verbose             (bool) : private
+            _log                 (obj)  : private
+            _log_context         (str)  : private
+            _trim_blocks         (bool) : private
+            _lstrip_blocks       (bool) : private
+            _template_directory  (str)  : private
+            _available_templates (list) : private
+            _loaded_template     (obj)  : private
+            _rendered_template   (obj)  : private
+            _jinja_loader        (obj)  : private
+            _jinja_tpl_library   (str)  : private
+            _output_directory    (str)  : private
+            _output_file         (str)  : private
+
+        Properties:
+            trim_blocks         (bool) : public
+            lstrip_blocks       (bool) : public
+            verbose             (bool) : public
+            template_directory  (str)  : public
+            available_templates (str)  : public
+            load                (str)  : public
+            rendered:           (str)  : public
+
+        Methods:
+            _exception_handler
+            log
+            load
+            render
+            write
+        """
 
         # Class Public Properties and Attributes ######
         # Check the passed value to ensure its a bool before assignment.
@@ -163,6 +199,58 @@ class JinjaUtils(object):
         except Exception as e:
             self._exception_handler(self.__log_id, e)
 
+    ################################################
+    # Verbose Setter / Getter Methods:             #
+    ################################################
+    @property
+    def verbose(self):
+        """ Verbose Property Getter
+
+        Getter method for the verbose property.
+        This method will return the verbose setting.
+        """
+        # Define this methods identity for functional logging:
+        self.__id = inspect.stack()[0][3]
+        self.log(
+            "{} property requested.".format(self.__id), 'info', self.__id
+        )
+        return self._verbose
+
+    @verbose.setter
+    def verbose(self, verbose):
+        """ Verbose Property Setter
+
+        Setter method for the verbose property.
+        This method will set the verbose setting if a valid
+        bool value is provided.
+        """
+        # Define this methods identity for functional logging:
+        self.__id = inspect.stack()[0][3]
+        self.log(
+            "{} property update requested.".format(self.__id),
+            'info',
+            self.__id
+        )
+        if verbose is not None and isinstance(verbose, bool):
+            self._verbose = verbose
+            self.log(
+                "Updated {} property with value: {}".format(
+                    self.__id,
+                    self._verbose
+                ),
+                'info',
+                self.__id
+            )
+        else:
+            self.log(
+                "{} argument expected bool but received type: {}".format(
+                    self.__id,
+                    type(verbose)
+                ),
+                'error',
+                self.__id
+            )
+
     ############################################
     # Jinja Option Getters and Setters:        #
     ############################################
@@ -266,58 +354,6 @@ class JinjaUtils(object):
                 "{} argument expected bool but received type: {}".format(
                     self.__id,
                     type(lstrip_blocks_setting)
-                ),
-                'error',
-                self.__id
-            )
-
-    ################################################
-    # Verbose Setter / Getter Methods:             #
-    ################################################
-    @property
-    def verbose(self):
-        """ Verbose Property Getter
-
-        Getter method for the verbose property.
-        This method will return the verbose setting.
-        """
-        # Define this methods identity for functional logging:
-        self.__id = inspect.stack()[0][3]
-        self.log(
-            "{} property requested.".format(self.__id), 'info', self.__id
-        )
-        return self._verbose
-
-    @verbose.setter
-    def verbose(self, verbose):
-        """ Verbose Property Setter
-
-        Setter method for the verbose property.
-        This method will set the verbose setting if a valid
-        bool value is provided.
-        """
-        # Define this methods identity for functional logging:
-        self.__id = inspect.stack()[0][3]
-        self.log(
-            "{} property update requested.".format(self.__id),
-            'info',
-            self.__id
-        )
-        if verbose is not None and isinstance(verbose, bool):
-            self._verbose = verbose
-            self.log(
-                "Updated {} property with value: {}".format(
-                    self.__id,
-                    self._verbose
-                ),
-                'info',
-                self.__id
-            )
-        else:
-            self.log(
-                "{} argument expected bool but received type: {}".format(
-                    self.__id,
-                    type(verbose)
                 ),
                 'error',
                 self.__id

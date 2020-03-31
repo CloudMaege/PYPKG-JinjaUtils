@@ -2,7 +2,7 @@
 
 <br>
 
-![CloudMage](https://github.com/TheCloudMage/Common-Images/raw/master/cloudmage/cloudmage-glow-banner.png)
+![CloudMage](https://cloudmage-images-public.s3.us-east-2.amazonaws.com/banners/cloudmage-nebula-glow.png)
 
 <br>
 
@@ -375,7 +375,7 @@ The following section will show a few examples of how the module can be used to 
 
 <br>
 
-__Basic Usage__
+#### Basic Usage
 
 ```python
 from cloudmage.jinjautils import JinjaUtils
@@ -409,7 +409,7 @@ Jinja.write(output_directory=jinja_output_path, output_file='feb_sales.html', ba
 
 <br><br>
 
-> ![CloudMage](https://github.com/TheCloudMage/Common-Images/raw/master/icons/note.png) &nbsp;&nbsp; [__Optional Verbose Class Constructor Argument:__](Note) <br> When instantiating the class an optional `verbose` argument can be provided. The argument expects a bool value of either `True` or `False`. By default verbose is set to False. If `verbose=True` is passed during object instantiation, then debug mode is turned on allowing the class to output DEBUG, INFO, and WARNING messages to stdout, and ERROR messages to stderr.
+> ![CloudMage](https://cloudmage-images-public.s3.us-east-2.amazonaws.com/icons/cloudmage/32/note.png) &nbsp;&nbsp; [__Optional Verbose Class Constructor Argument:__](Note) <br> When instantiating the class an optional `verbose` argument can be provided. The argument expects a bool value of either `True` or `False`. By default verbose is set to False. If `verbose=True` is passed during object instantiation, then debug mode is turned on allowing the class to output DEBUG, INFO, and WARNING messages to stdout, and ERROR messages to stderr.
 
 <br><br>
 
@@ -433,7 +433,7 @@ Jinja.write(output_directory='.', output_file='2019-sales.yaml')
 
 <br><br>
 
-> ![CloudMage](https://github.com/TheCloudMage/Common-Images/raw/master/icons/note.png) &nbsp;&nbsp; [__Optional Log Object:__](Note) <br> When instantiating the class an optional `log` argument can also be provided. The argument expects an Logger object to be passed as an input. If passed then all DEBUG, INFO, WARNING, and ERROR messages will be printed to the standard log levels (`log.debug()`, `log.info()`, `log.warning()`, `log.error()`) and printed to the passed respective logger object method.
+> ![CloudMage](https://cloudmage-images-public.s3.us-east-2.amazonaws.com/icons/cloudmage/32/note.png) &nbsp;&nbsp; [__Optional Log Object:__](Note) <br> When instantiating the class an optional `log` argument can also be provided. The argument expects an Logger object to be passed as an input. If passed then all DEBUG, INFO, WARNING, and ERROR messages will be printed to the standard log levels (`log.debug()`, `log.info()`, `log.warning()`, `log.error()`) and printed to the passed respective logger object method.
 
 <br><br>
 
@@ -500,7 +500,7 @@ To view the project changelog see: [ChangeLog:](CHANGELOG.md)
 
 <br><br>
 
-## ![TheCloudMage](https://github.com/TheCloudMage/Common-Images/raw/master/cloudmage/cloudmage-profile.png) &nbsp;&nbsp;Contacts and Contributions
+## ![TheCloudMage](https://cloudmage-images-public.s3.us-east-2.amazonaws.com/icons/cloudmage/32/logo.png) &nbsp;&nbsp;Contacts and Contributions
 
 This project is owned and maintained by: [@rnason](https://github.com/rnason)
 
