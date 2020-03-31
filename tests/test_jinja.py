@@ -1321,7 +1321,7 @@ def test_render_exception_invalid_variable(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "ERROR   CLS->JinjaUtils.render: \
--> EXCEPTION occurred in: 'CLS->JinjaUtils.render', on line 614: \
+-> EXCEPTION occurred in: 'CLS->JinjaUtils.render', on line 650: \
 -> 'context' is undefined" in err
 
 

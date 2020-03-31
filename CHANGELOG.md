@@ -9,7 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-## [v1.0.4] - BugFix Patch (2020-02-18) - [@rnason](https://github.com/rnason)
+## [v1.0.5] - BugFix Patch (2020-03-31) - [@rnason](https://github.com/rnason)
+
+### Added:
+
+- Added Verbose Getter and Setter methods.
+
+<br>
+
+### Changed
+
+- Fixed test for render exception to catch proper line number.
+- Fixed image location pointed to public S3 bucket servered images.
+- Added Function documentation.
+
+<br><br>
+
+## [v1.0.4] - Pep8 (2020-02-18) - [@rnason](https://github.com/rnason)
 
 ### Added:
 
