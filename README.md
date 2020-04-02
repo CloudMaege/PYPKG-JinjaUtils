@@ -502,7 +502,7 @@ To view the project changelog see: [ChangeLog:](CHANGELOG.md)
 
 ## ![TheCloudMage](https://cloudmage-images-public.s3.us-east-2.amazonaws.com/icons/cloudmage/32/logo.png) &nbsp;&nbsp;Contacts and Contributions
 
-This project is owned and maintained by: [@TheCloudMage](https://github.com/rnason)
+This project is owned and maintained by: [@TheCloudMage](https://github.com/TheCloudMage)
 
 <br>
 
