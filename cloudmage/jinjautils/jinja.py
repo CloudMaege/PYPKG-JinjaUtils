@@ -15,13 +15,13 @@
 from jinja2 import Template, Environment, FileSystemLoader
 
 # Import Base Python Modules
-import json
-import os
-import sys
+from datetime import datetime
 import inspect
 import ntpath
 import shutil
-import datetime
+import json
+import sys
+import os
 
 
 #####################
@@ -45,35 +45,35 @@ class JinjaUtils(object):
             log     (obj):  optional [default=None]
 
         Attributes:
-            _verbose             (bool) : private
-            _log                 (obj)  : private
-            _log_context         (str)  : private
-            _trim_blocks         (bool) : private
-            _lstrip_blocks       (bool) : private
-            _template_directory  (str)  : private
-            _available_templates (list) : private
-            _loaded_template     (obj)  : private
-            _rendered_template   (obj)  : private
-            _jinja_loader        (obj)  : private
-            _jinja_tpl_library   (str)  : private
-            _output_directory    (str)  : private
-            _output_file         (str)  : private
+            self._verbose             (bool) : private
+            self._log                 (obj)  : private
+            self._log_context         (str)  : private
+            self._trim_blocks         (bool) : private
+            self._lstrip_blocks       (bool) : private
+            self._template_directory  (str)  : private
+            self._available_templates (list) : private
+            self._loaded_template     (obj)  : private
+            self._rendered_template   (obj)  : private
+            self._jinja_loader        (obj)  : private
+            self._jinja_tpl_library   (str)  : private
+            self._output_directory    (str)  : private
+            self._output_file         (str)  : private
 
         Properties:
-            trim_blocks         (bool) : public
-            lstrip_blocks       (bool) : public
-            verbose             (bool) : public
-            template_directory  (str)  : public
-            available_templates (str)  : public
-            load                (str)  : public
-            rendered:           (str)  : public
+            self.trim_blocks         (bool) : public
+            self.lstrip_blocks       (bool) : public
+            self.verbose             (bool) : public
+            self.template_directory  (str)  : public
+            self.available_templates (str)  : public
+            self.load                (str)  : public
+            self.rendered:           (str)  : public
 
         Methods:
-            _exception_handler
-            log
-            load
-            render
-            write
+            self._exception_handler
+            self.log
+            self.load
+            self.render
+            self.write
         """
 
         # Class Public Properties and Attributes ######
@@ -128,13 +128,12 @@ class JinjaUtils(object):
             Publish properly formatted exceptions
             to log object or stdout, stderr
         """
-        exc_msg = "EXCEPTION occurred in: '{}.{}', on line {}: -> {}".format(
-            self._log_context,
-            caller_function,
-            sys.exc_info()[2].tb_lineno,
-            str(exception_object)
+        this_exception_msg = (
+            "EXCEPTION occurred in: "
+            f"{self._log_context}.{caller_function}, on line "
+            f"{sys.exc_info()[2].tb_lineno}: -> {str(exception_object)}"
         )
-        self.log(exc_msg, 'error', caller_function)
+        self.log(this_exception_msg, 'error', caller_function)
 
     ############################################
     # Class Logger:                            #
@@ -156,48 +155,49 @@ class JinjaUtils(object):
             Log Stream
         """
         # Define this methods identity for functional logging:
-        self.__log_id = inspect.stack()[0][3]
+        __id = inspect.stack()[0][3]
         try:
             # Internal method variable assignments:
-            log_msg_caller = "{}.{}".format(self._log_context, log_id)
+            this_log_msg_caller = f"{self._log_context}.{log_id}"
+
             # Set the log message offset based on the message type:
             # [debug=3, info=4, warning=1, error=3]
-            log_msg_offset = 3
+            this_log_msg_offset = 3
             if log_type.lower() == 'info':
-                log_msg_offset = 4
+                this_log_msg_offset = 4
             elif log_type.lower() == 'warning':
-                log_msg_offset = 1
+                this_log_msg_offset = 1
 
             # If a valid log object was passed into the class constructor,
             # publish the log to the log object:
             if self._log is not None:
                 # Set the log message prefix
-                log_message = "{}: -> {}".format(log_msg_caller, log_msg)
+                this_log_message = f"{this_log_msg_caller}: -> {log_msg}"
                 if log_type.lower() == 'error':
-                    self._log.error(log_message)
+                    self._log.error(this_log_message)
                 elif log_type.lower() == 'warning':
-                    self._log.warning(log_message)
+                    self._log.warning(this_log_message)
                 elif log_type.lower() == 'info':
-                    self._log.info(log_message)
+                    self._log.info(this_log_message)
                 else:
-                    self._log.debug(log_message)
+                    self._log.debug(this_log_message)
             # If no valid log object was passed into the class constructor,
             # write the message to stdout, stderr:
             else:
-                log_message = "{}    {}{}{}: -> {}".format(
-                    datetime.datetime.now(),
+                this_log_message = "{}    {}{}{}: -> {}".format(
+                    datetime.now(),
                     log_type.upper(),
-                    " " * log_msg_offset,
-                    log_msg_caller,
+                    " " * this_log_msg_offset,
+                    this_log_msg_caller,
                     log_msg
                 )
                 if log_type.lower() == 'error':
-                    print(log_message, file=sys.stderr)
+                    print(this_log_message, file=sys.stderr)
                 else:
                     if self._verbose:
-                        print(log_message, file=sys.stdout)
+                        print(this_log_message, file=sys.stdout)
         except Exception as e:
-            self._exception_handler(self.__log_id, e)
+            self._exception_handler(__id, e)
 
     ################################################
     # Verbose Setter / Getter Methods:             #
@@ -210,10 +210,8 @@ class JinjaUtils(object):
         This method will return the verbose setting.
         """
         # Define this methods identity for functional logging:
-        self.__id = inspect.stack()[0][3]
-        self.log(
-            "{} property requested.".format(self.__id), 'info', self.__id
-        )
+        __id = inspect.stack()[0][3]
+        self.log(f"{__id} property requested.", 'info', __id)
         return self._verbose
 
     @verbose.setter
@@ -225,30 +223,22 @@ class JinjaUtils(object):
         bool value is provided.
         """
         # Define this methods identity for functional logging:
-        self.__id = inspect.stack()[0][3]
-        self.log(
-            "{} property update requested.".format(self.__id),
-            'info',
-            self.__id
-        )
+        __id = inspect.stack()[0][3]
+        self.log(f"{__id} property update requested.", 'info', __id)
+
         if verbose is not None and isinstance(verbose, bool):
             self._verbose = verbose
             self.log(
-                "Updated {} property with value: {}".format(
-                    self.__id,
-                    self._verbose
-                ),
+                f"Updated {__id} property with value: {self._verbose}",
                 'info',
-                self.__id
+                __id
             )
         else:
             self.log(
-                "{} argument expected bool but received type: {}".format(
-                    self.__id,
-                    type(verbose)
-                ),
+                f"{__id} property argument expected type bool "
+                f"but received type: {type(verbose)}",
                 'error',
-                self.__id
+                __id
             )
 
     ############################################
@@ -261,10 +251,8 @@ class JinjaUtils(object):
         Getter method for Jinja trim_blocks property.
         This method returns the current trim_blocks setting value."""
         # Define this methods identity for functional logging:
-        self.__id = inspect.stack()[0][3]
-        self.log(
-            "{} property requested.".format(self.__id), 'info', self.__id
-        )
+        __id = inspect.stack()[0][3]
+        self.log(f"{__id} property requested.", 'info', __id)
         return self._trim_blocks
 
     @trim_blocks.setter
@@ -276,12 +264,9 @@ class JinjaUtils(object):
         as a valid value for the property.
         """
         # Define this methods identity for functional logging:
-        self.__id = inspect.stack()[0][3]
-        self.log(
-            "{} property update requested.".format(self.__id),
-            'info',
-            self.__id
-        )
+        __id = inspect.stack()[0][3]
+        self.log(f"{__id} property update requested.", 'info', __id)
+
         # if the passed value is a valid bool value then set the value.
         if (
             trim_blocks_setting is not None and
@@ -290,20 +275,20 @@ class JinjaUtils(object):
             self._trim_blocks = trim_blocks_setting
             self.log(
                 "Updated {} property with value: {}".format(
-                    self.__id,
+                    __id,
                     self._trim_blocks
                 ),
                 'info',
-                self.__id
+                __id
             )
         else:
             self.log(
                 "{} argument expected bool but received type: {}".format(
-                    self.__id,
+                    __id,
                     type(trim_blocks_setting)
                 ),
                 'error',
-                self.__id
+                __id
             )
 
     @property
@@ -314,10 +299,8 @@ class JinjaUtils(object):
         This method returns the current lstrip_blocks setting value.
         """
         # Define this methods identity for functional logging:
-        self.__id = inspect.stack()[0][3]
-        self.log(
-            "{} property requested.".format(self.__id), 'info', self.__id
-        )
+        __id = inspect.stack()[0][3]
+        self.log(f"{__id} property requested.", 'info', __id)
         return self._lstrip_blocks
 
     @lstrip_blocks.setter
@@ -329,12 +312,9 @@ class JinjaUtils(object):
         for the lstrip_blocks property.
         """
         # Define this methods identity for functional logging:
-        self.__id = inspect.stack()[0][3]
-        self.log(
-            "{} property update requested.".format(self.__id),
-            'info',
-            self.__id
-        )
+        __id = inspect.stack()[0][3]
+        self.log(f"{__id} property update requested.", 'info', __id)
+
         # if the passed value is a valid bool value then set the value.
         if (
             lstrip_blocks_setting is not None and
@@ -343,20 +323,20 @@ class JinjaUtils(object):
             self._lstrip_blocks = lstrip_blocks_setting
             self.log(
                 "Updated {} property with value: {}".format(
-                    self.__id,
+                    __id,
                     self._lstrip_blocks
                 ),
                 'info',
-                self.__id
+                __id
             )
         else:
             self.log(
                 "{} argument expected bool but received type: {}".format(
-                    self.__id,
+                    __id,
                     type(lstrip_blocks_setting)
                 ),
                 'error',
-                self.__id
+                __id
             )
 
     ############################################
@@ -370,12 +350,8 @@ class JinjaUtils(object):
         template directory and return it back to the method caller.
         """
         # Define this methods identity for functional logging:
-        self.__id = inspect.stack()[0][3]
-        self.log(
-            "{} property requested.".format(self.__id),
-            'info',
-            self.__id
-        )
+        __id = inspect.stack()[0][3]
+        self.log(f"{__id} property requested.", 'info', __id)
         if self._template_directory is None:
             return "A template directory has not yet been configured."
         else:
@@ -392,8 +368,8 @@ class JinjaUtils(object):
         template_directory is updated.
         """
         # Define this methods identity for functional logging:
-        self.__id = inspect.stack()[0][3]
-        self.log("Call to retrieve available_templates", 'info', self.__id)
+        __id = inspect.stack()[0][3]
+        self.log("Call to retrieve available_templates", 'info', __id)
         if (
             self._available_templates is not None and
             isinstance(self._available_templates, list)
@@ -412,12 +388,9 @@ class JinjaUtils(object):
         template directory and populate the available_templates list property.
         """
         # Define this methods identity for functional logging:
-        self.__id = inspect.stack()[0][3]
-        self.log(
-            "{} property update requested.".format(self.__id),
-            'info',
-            self.__id
-        )
+        __id = inspect.stack()[0][3]
+        self.log(f"{__id} property update requested.", 'info', __id)
+
         try:
             # Set template directory
             if (
@@ -435,7 +408,7 @@ class JinjaUtils(object):
                             self._template_directory
                         ),
                         'debug',
-                        self.__id
+                        __id
                     )
                     # Load the templates into Jinja
                     self._jinja_loader = FileSystemLoader(
@@ -452,12 +425,12 @@ class JinjaUtils(object):
                             self._template_directory
                         ),
                         'debug',
-                        self.__id
+                        __id
                     )
                     self.log(
                         "Added to_json filter to Jinja Environment object.",
                         'debug',
-                        self.__id
+                        __id
                     )
                     # Set Jinja template library
                     template_list = self._jinja_tpl_library.list_templates()
@@ -467,22 +440,22 @@ class JinjaUtils(object):
                         self._available_templates = template_list
                         self.log(
                             "Updated {} property with: {}".format(
-                                self.__id,
+                                __id,
                                 self._available_templates
                             ),
                             'debug',
-                            self.__id
+                            __id
                         )
                 else:
                     self.log(
                         "Provided directory path doesn't exit.",
                         'error',
-                        self.__id
+                        __id
                     )
                     self.log(
                         "Aborting property update...",
                         'error',
-                        self.__id
+                        __id
                     )
             else:
                 self.log(
@@ -490,11 +463,11 @@ class JinjaUtils(object):
                         type(template_directory_path)
                     ),
                     'error',
-                    self.__id
+                    __id
                 )
-                self.log("Aborting property update...", 'error', self.__id)
+                self.log("Aborting property update...", 'error', __id)
         except Exception as e:  # pragma: no cover
-            self._exception_handler(self.__id, e)  # pragma: no cover
+            self._exception_handler(__id, e)  # pragma: no cover
 
     ############################################
     # Jinja Template Getter/Setter:            #
@@ -507,12 +480,9 @@ class JinjaUtils(object):
         self._loaded_template back to the caller
         """
         # Define this methods identity for functional logging:
-        self.__id = inspect.stack()[0][3]
-        self.log(
-            "{} property requested.".format(self.__id),
-            'info',
-            self.__id
-        )
+        __id = inspect.stack()[0][3]
+        self.log(f"{__id} property requested.", 'info', __id)
+
         # Return the loaded template name.
         if (
             self._loaded_template is not None and
@@ -537,12 +507,8 @@ class JinjaUtils(object):
         self._loaded_template = None
         try:
             # Define this methods identity for functional logging:
-            self.__id = inspect.stack()[0][3]
-            self.log(
-                "{} property update requested.".format(self.__id),
-                'info',
-                self.__id
-            )
+            __id = inspect.stack()[0][3]
+            self.log(f"{__id} property update requested.", 'info', __id)
 
             # Check the value passed to determine what type
             # of template was passed.
@@ -553,7 +519,7 @@ class JinjaUtils(object):
                         self._loaded_template
                     ),
                     'info',
-                    self.__id
+                    __id
                 )
                 if not self._loaded_template.name:
                     self._loaded_template.name = os.path.basename(template)
@@ -562,7 +528,7 @@ class JinjaUtils(object):
                         self._loaded_template.name
                     ),
                     'debug',
-                    self.__id
+                    __id
                 )
             else:
                 if isinstance(template, str):
@@ -577,7 +543,7 @@ class JinjaUtils(object):
                                     self._loaded_template
                                 ),
                                 'info',
-                                self.__id
+                                __id
                             )
                     if (
                         self._loaded_template is None
@@ -587,19 +553,19 @@ class JinjaUtils(object):
                                 self._template_directory
                             ),
                             'warning',
-                            self.__id
+                            __id
                         )
                 else:
                     self.log(
                         "{} expected str template but received: {}".format(
-                            self.__id,
+                            __id,
                             type(template)
                         ),
                         'error',
-                        self.__id
+                        __id
                     )
         except Exception as e:
-            self._exception_handler(self.__id, e)
+            self._exception_handler(__id, e)
 
     @property
     def rendered(self):
@@ -609,12 +575,9 @@ class JinjaUtils(object):
         of the currently loaded template.
         """
         # Define this methods identity for functional logging:
-        self.__id = inspect.stack()[0][3]
-        self.log(
-            "{} property requested.".format(self.__id),
-            'info',
-            self.__id
-        )
+        __id = inspect.stack()[0][3]
+        self.log(f"{__id} property requested.", 'info', __id)
+
         # Return the rendered template value.
         if self._rendered_template is not None:
             return self._rendered_template
@@ -635,11 +598,11 @@ class JinjaUtils(object):
         self._rendered_template = None
         try:
             # Define this methods identity for functional logging:
-            self.__id = inspect.stack()[0][3]
+            __id = inspect.stack()[0][3]
             self.log(
-                "{} of loaded template requested.".format(self.__id),
+                "{} of loaded template requested.".format(__id),
                 'info',
-                self.__id
+                __id
             )
             if (
                 isinstance(self._loaded_template, Template) and
@@ -653,16 +616,16 @@ class JinjaUtils(object):
                         self._loaded_template
                     ),
                     'info',
-                    self.__id
+                    __id
                 )
             else:
                 self.log(
                     "No template loaded, Aborting render!",
                     'error',
-                    self.__id
+                    __id
                 )
         except Exception as e:
-            self._exception_handler(self.__id, e)
+            self._exception_handler(__id, e)
 
     def write(self, output_directory, output_file, backup=True):
         """ Write Rendered Template Method
@@ -673,11 +636,11 @@ class JinjaUtils(object):
         """
         try:
             # Define this methods identity for functional logging:
-            self.__id = inspect.stack()[0][3]
+            __id = inspect.stack()[0][3]
             self.log(
-                "{} called on rendered template requested.".format(self.__id),
+                "{} called on rendered template requested.".format(__id),
                 'info',
-                self.__id
+                __id
             )
 
             # Set local method variables
@@ -689,12 +652,12 @@ class JinjaUtils(object):
                         type(backup)
                     ),
                     'warning',
-                    self.__id
+                    __id
                 )
                 self.log(
                     "Setting backup to default setting...",
                     'warning',
-                    self.__id
+                    __id
                 )
                 self.__backup = True
             self.log(
@@ -702,7 +665,7 @@ class JinjaUtils(object):
                         self.__backup
                     ),
                     'info',
-                    self.__id
+                    __id
                 )
 
             # Set the Output Directory and perform directory validation checks
@@ -717,7 +680,7 @@ class JinjaUtils(object):
                         self._output_directory
                     ),
                     'debug',
-                    self.__id
+                    __id
                 )
                 # Set the Output file and perform validation checks
                 if isinstance(output_file, str):
@@ -729,7 +692,7 @@ class JinjaUtils(object):
                                 self._output_file
                             ),
                             'debug',
-                            self.__id
+                            __id
                         )
                 else:
                     self.log(
@@ -737,16 +700,16 @@ class JinjaUtils(object):
                             type(output_file)
                         ),
                         'error',
-                        self.__id
+                        __id
                     )
                     return False
             else:
                 self.log(
                     "Invalid output directory specified in {} call".format(
-                        self.__id
+                        __id
                     ),
                     'error',
-                    self.__id
+                    __id
                 )
                 return False
 
@@ -761,7 +724,7 @@ class JinjaUtils(object):
                     raw_filename, raw_file_extention = os.path.splitext(
                         self._output_file
                     )
-                    backup_timestamp = datetime.datetime.now().strftime(
+                    backup_timestamp = datetime.now().strftime(
                         "%Y%m%d_%H%M%S"
                     )
                     source_filename = os.path.join(
@@ -781,7 +744,7 @@ class JinjaUtils(object):
                             backup_filename
                         ),
                         "info",
-                        self.__id
+                        __id
                     )
                 else:
                     self.log(
@@ -789,7 +752,7 @@ class JinjaUtils(object):
                             self._output_file
                         ),
                         "warning",
-                        self.__id
+                        __id
                     )
             # Write the output file.
             write_output_file = os.path.join(
@@ -801,18 +764,18 @@ class JinjaUtils(object):
                     write_output_file
                 ),
                 "debug",
-                self.__id
+                __id
             )
             if self.rendered == "No template has been rendered!":
                 self.log(
                     "Render method not called or failed to render.",
                     'warning',
-                    self.__id
+                    __id
                 )
                 self.log(
                     "No rendered template available for write request!",
                     'warning',
-                    self.__id
+                    __id
                 )
                 return False
             else:
@@ -822,8 +785,8 @@ class JinjaUtils(object):
                 self.log(
                     "{} written successfully!".format(write_output_file),
                     "info",
-                    self.__id
+                    __id
                 )
                 return True
         except Exception as e:  # pragma: no cover
-            self._exception_handler(self.__id, e)  # pragma: no cover
+            self._exception_handler(__id, e)  # pragma: no cover

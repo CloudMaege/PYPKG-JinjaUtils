@@ -19,7 +19,7 @@ from cloudmage.jinjautils import JinjaUtils
 import pytest
 import os
 import shutil
-# import sys
+import sys
 
 
 ######################################
@@ -233,7 +233,7 @@ def test_verbose_setter_invalid(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "ERROR   CLS->JinjaUtils.verbose: \
--> verbose argument expected bool but received" in err
+-> verbose property argument expected type bool but received type:" in err
 
 
 ######################################
@@ -652,7 +652,7 @@ def test_exception_handler(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "ERROR   CLS->JinjaUtils.log: \
--> EXCEPTION occurred in: 'CLS->JinjaUtils.log'" in err
+-> EXCEPTION occurred in: CLS->JinjaUtils.log" in err
 
 
 #############################################
@@ -1143,7 +1143,7 @@ def test_load_template_invalid_type2(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "ERROR   CLS->JinjaUtils.load: \
--> EXCEPTION occurred in: 'CLS->JinjaUtils.load', on line" in err
+-> EXCEPTION occurred in: CLS->JinjaUtils.load, on line" in err
 
     # Check for expected object state
     assert(Jinja._loaded_template is None)
@@ -1321,8 +1321,8 @@ def test_render_exception_invalid_variable(capsys):
     # sys.stdout.write(out)
     # sys.stderr.write(err)
     assert "ERROR   CLS->JinjaUtils.render: \
--> EXCEPTION occurred in: 'CLS->JinjaUtils.render', on line 650: \
--> 'context' is undefined" in err
+-> EXCEPTION occurred in: CLS->JinjaUtils.render, on line" in err
+    assert "-> 'context' is undefined" in err
 
 
 def test_render_exception_template_none(capsys):
@@ -1460,9 +1460,9 @@ def test_write_not_rendered(capsys):
     out, err = capsys.readouterr()
     # sys.stdout.write(out)
     # sys.stderr.write(err)
-    assert "WARNING CLS->JinjaUtils.rendered: \
+    assert "WARNING CLS->JinjaUtils.write: \
 -> Render method not called or failed to render." in out
-    assert "WARNING CLS->JinjaUtils.rendered: \
+    assert "WARNING CLS->JinjaUtils.write: \
 -> No rendered template available for write request!" in out
 
 
@@ -1753,7 +1753,7 @@ def test_write_output_file_path(capsys):
             Jinja._output_file
         )
     ) in out
-    assert "INFO    CLS->JinjaUtils.rendered: \
+    assert "INFO    CLS->JinjaUtils.write: \
 -> {} written successfully!".format(
             os.path.join(
                 Jinja._output_directory,
@@ -1850,7 +1850,7 @@ def test_write_backup(capsys):
             backup_file
         )
     ) in out
-    assert "INFO    CLS->JinjaUtils.rendered: \
+    assert "INFO    CLS->JinjaUtils.write: \
 -> {} written successfully!".format(
         os.path.join(
             Jinja._output_directory,
@@ -1968,7 +1968,7 @@ def test_write_backup_disabled(capsys):
 -> File backup is disabled, overwritting: {}!".format(
         Jinja._output_file
     ) in out
-    assert "INFO    CLS->JinjaUtils.rendered: \
+    assert "INFO    CLS->JinjaUtils.write: \
 -> {} written successfully!".format(
         os.path.join(
             Jinja._output_directory,

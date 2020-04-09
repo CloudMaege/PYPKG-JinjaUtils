@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "CloudMage-JinjaUtils"
-version = "1.0.5"
+version = "1.0.6"
 description = "Quickly and easily define, load, render and write Jinja templates."
 authors = ["Rich Nason <rnason@cloudmage.io>"]
 maintainers = ["Rich Nason <rnason@cloudmage.io>"]
@@ -10,9 +10,9 @@ include = [
     "CHANGELOG.md",
     "LICENSE"
 ]
-homepage = "https://github.com/TheCloudMage/PyPkgs-JinjaUtils"
-repository = "https://github.com/TheCloudMage/PyPkgs-JinjaUtils"
-documentation = "https://github.com/TheCloudMage/PyPkgs-JinjaUtils"
+homepage = "https://github.com/CloudMages/PyPkgs-JinjaUtils"
+repository = "https://github.com/CloudMages/PyPkgs-JinjaUtils"
+documentation = "https://github.com/CloudMages/PyPkgs-JinjaUtils"
 keywords = [
     "Packages",
     "CloudMage",
@@ -31,8 +31,8 @@ packages = [
 ]
 
 [tool.poetry.urls]
-"Releases" = "https://github.com/TheCloudMage/PyPkgs-JinjaUtils/releases"
-"Issues" = "https://github.com/TheCloudMage/PyPkgs-JinjaUtils/issues"
+"Releases" = "https://github.com/CloudMages/PyPkgs-JinjaUtils/releases"
+"Issues" = "https://github.com/CloudMages/PyPkgs-JinjaUtils/issues"
 
 [tool.poetry.dependencies]
 python = "^3.6"
