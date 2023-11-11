@@ -6,7 +6,7 @@
 
 <br/>
 
-![PyTests](https://github.com/TheCloudMage/PyPkgs-JinjaUtils/workflows/PyTests/badge.svg)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Coverage](https://github.com/TheCloudMage/PyPkgs-JinjaUtils/workflows/Coverage/badge.svg)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![codecov](https://codecov.io/gh/TheCloudMage/PyPkgs-JinjaUtils/branch/master/graph/badge.svg)](https://codecov.io/gh/TheCloudMage/PyPkgs-JinjaUtils)
+[![PyTests](https://github.com/CloudMaege/PYPKG-JinjaUtils/actions/workflows/pytests.yml/badge.svg)](https://github.com/CloudMaege/PYPKG-JinjaUtils/actions/workflows/pytests.yml)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Coverage](https://github.com/CloudMaege/PYPKG-JinjaUtils/actions/workflows/coverage.yml/badge.svg)](https://github.com/CloudMaege/PYPKG-JinjaUtils/actions/workflows/coverage.yml)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![codecov](https://codecov.io/gh/CloudMaege/PYPKG-JinjaUtils/graph/badge.svg?token=N3ON1QRDWA)](https://codecov.io/gh/CloudMaege/PYPKG-JinjaUtils)
 
 <br/><br/>
 
