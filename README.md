@@ -2,7 +2,7 @@
 
 <br/>
 
-![CloudMage](https://cloudmage-images-public.s3.us-east-2.amazonaws.com/banners/cloudmage-nebula-glow.png)
+![CloudMage](assets/cm-nebula-banner.png)
 
 <br/>
 
@@ -437,7 +437,7 @@ Jinja.write(output_directory=jinja_output_path, output_file='feb_sales.html', ba
 
 <br/><br/>
 
-> ![CloudMage](https://cloudmage-images-public.s3.us-east-2.amazonaws.com/icons/cloudmage/32/note.png) &nbsp;&nbsp; [__Optional Verbose Class Constructor Argument:__](Note) <br/> When instantiating the class an optional `verbose` argument can be provided. The argument expects a bool value of either `True` or `False`. By default verbose is set to False. If `verbose=True` is passed during object instantiation, then debug mode is turned on allowing the class to output DEBUG, INFO, and WARNING messages to stdout, and ERROR messages to stderr.
+> ![CloudMage](assets/note.png) &nbsp;&nbsp; [__Optional Verbose Class Constructor Argument:__](Note) <br/> When instantiating the class an optional `verbose` argument can be provided. The argument expects a bool value of either `True` or `False`. By default verbose is set to False. If `verbose=True` is passed during object instantiation, then debug mode is turned on allowing the class to output DEBUG, INFO, and WARNING messages to stdout, and ERROR messages to stderr.
 
 <br/><br/>
 
@@ -461,7 +461,7 @@ Jinja.write(output_directory='.', output_file='2019-sales.yaml')
 
 <br/><br/>
 
-> ![CloudMage](https://cloudmage-images-public.s3.us-east-2.amazonaws.com/icons/cloudmage/32/note.png) &nbsp;&nbsp; [__Optional Log Object:__](Note) <br/> When instantiating the class an optional `log` argument can also be provided. The argument expects an Logger object to be passed as an input. If passed then all DEBUG, INFO, WARNING, and ERROR messages will be printed to the standard log levels (`log.debug()`, `log.info()`, `log.warning()`, `log.error()`) and printed to the passed respective logger object method.
+> ![CloudMage](assets/note.png) &nbsp;&nbsp; [__Optional Log Object:__](Note) <br/> When instantiating the class an optional `log` argument can also be provided. The argument expects an Logger object to be passed as an input. If passed then all DEBUG, INFO, WARNING, and ERROR messages will be printed to the standard log levels (`log.debug()`, `log.info()`, `log.warning()`, `log.error()`) and printed to the passed respective logger object method.
 
 <br/><br/>
 
@@ -527,16 +527,3 @@ for items in Logger.debug_logs:
 To view the project changelog see: [ChangeLog:](CHANGELOG.md)
 
 <br/><br/>
-
-## ![TheCloudMage](https://cloudmage-images-public.s3.us-east-2.amazonaws.com/icons/cloudmage/32/logo.png) &nbsp;&nbsp;Contacts and Contributions
-
-This project is owned and maintained by: [@TheCloudMage](https://github.com/TheCloudMage)
-
-<br/>
-
-To contribute, please:
-
-* Fork the project
-* Create a local branch
-* Submit Changes
-* Create A Pull Request
