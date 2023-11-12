@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br\>
 
+## [v1.0.7] - General Updates (2023-12-11) - [@TheCloudMage](https://github.com/TheCloudMage)
+
+-----
+
+### Changed
+
+- Updated package dependencies, python version. Changed to new reporitory namespace.
+
+<br\><br\>
+
+
 ## [v1.0.6] - BugFix LogIds (2020-04-08) - [@TheCloudMage](https://github.com/TheCloudMage)
 
 -----
