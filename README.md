@@ -526,4 +526,4 @@ for items in Logger.debug_logs:
 
 To view the project changelog see: [ChangeLog:](CHANGELOG.md)
 
-<br/><br/>
+<br/>
